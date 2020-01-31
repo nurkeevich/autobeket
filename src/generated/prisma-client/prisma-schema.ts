@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateUser {
+export const typeDefs = /* GraphQL */ `type AggregateCar {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -10,9 +14,231 @@ type BatchPayload {
   count: Long!
 }
 
+type Car {
+  id: ID!
+  driver: User!
+  passengers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type CarConnection {
+  pageInfo: PageInfo!
+  edges: [CarEdge]!
+  aggregate: AggregateCar!
+}
+
+input CarCreateInput {
+  id: ID
+  driver: UserCreateOneWithoutCarsInput!
+  passengers: UserCreateManyWithoutRidesInput
+}
+
+input CarCreateManyWithoutDriverInput {
+  create: [CarCreateWithoutDriverInput!]
+  connect: [CarWhereUniqueInput!]
+}
+
+input CarCreateManyWithoutPassengersInput {
+  create: [CarCreateWithoutPassengersInput!]
+  connect: [CarWhereUniqueInput!]
+}
+
+input CarCreateWithoutDriverInput {
+  id: ID
+  passengers: UserCreateManyWithoutRidesInput
+}
+
+input CarCreateWithoutPassengersInput {
+  id: ID
+  driver: UserCreateOneWithoutCarsInput!
+}
+
+type CarEdge {
+  node: Car!
+  cursor: String!
+}
+
+enum CarOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CarPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input CarScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [CarScalarWhereInput!]
+  OR: [CarScalarWhereInput!]
+  NOT: [CarScalarWhereInput!]
+}
+
+type CarSubscriptionPayload {
+  mutation: MutationType!
+  node: Car
+  updatedFields: [String!]
+  previousValues: CarPreviousValues
+}
+
+input CarSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CarWhereInput
+  AND: [CarSubscriptionWhereInput!]
+  OR: [CarSubscriptionWhereInput!]
+  NOT: [CarSubscriptionWhereInput!]
+}
+
+input CarUpdateInput {
+  driver: UserUpdateOneRequiredWithoutCarsInput
+  passengers: UserUpdateManyWithoutRidesInput
+}
+
+input CarUpdateManyWithoutDriverInput {
+  create: [CarCreateWithoutDriverInput!]
+  delete: [CarWhereUniqueInput!]
+  connect: [CarWhereUniqueInput!]
+  set: [CarWhereUniqueInput!]
+  disconnect: [CarWhereUniqueInput!]
+  update: [CarUpdateWithWhereUniqueWithoutDriverInput!]
+  upsert: [CarUpsertWithWhereUniqueWithoutDriverInput!]
+  deleteMany: [CarScalarWhereInput!]
+}
+
+input CarUpdateManyWithoutPassengersInput {
+  create: [CarCreateWithoutPassengersInput!]
+  delete: [CarWhereUniqueInput!]
+  connect: [CarWhereUniqueInput!]
+  set: [CarWhereUniqueInput!]
+  disconnect: [CarWhereUniqueInput!]
+  update: [CarUpdateWithWhereUniqueWithoutPassengersInput!]
+  upsert: [CarUpsertWithWhereUniqueWithoutPassengersInput!]
+  deleteMany: [CarScalarWhereInput!]
+}
+
+input CarUpdateWithoutDriverDataInput {
+  passengers: UserUpdateManyWithoutRidesInput
+}
+
+input CarUpdateWithoutPassengersDataInput {
+  driver: UserUpdateOneRequiredWithoutCarsInput
+}
+
+input CarUpdateWithWhereUniqueWithoutDriverInput {
+  where: CarWhereUniqueInput!
+  data: CarUpdateWithoutDriverDataInput!
+}
+
+input CarUpdateWithWhereUniqueWithoutPassengersInput {
+  where: CarWhereUniqueInput!
+  data: CarUpdateWithoutPassengersDataInput!
+}
+
+input CarUpsertWithWhereUniqueWithoutDriverInput {
+  where: CarWhereUniqueInput!
+  update: CarUpdateWithoutDriverDataInput!
+  create: CarCreateWithoutDriverInput!
+}
+
+input CarUpsertWithWhereUniqueWithoutPassengersInput {
+  where: CarWhereUniqueInput!
+  update: CarUpdateWithoutPassengersDataInput!
+  create: CarCreateWithoutPassengersInput!
+}
+
+input CarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  driver: UserWhereInput
+  passengers_every: UserWhereInput
+  passengers_some: UserWhereInput
+  passengers_none: UserWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [CarWhereInput!]
+  OR: [CarWhereInput!]
+  NOT: [CarWhereInput!]
+}
+
+input CarWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
 scalar Long
 
 type Mutation {
+  createCar(data: CarCreateInput!): Car!
+  updateCar(data: CarUpdateInput!, where: CarWhereUniqueInput!): Car
+  upsertCar(where: CarWhereUniqueInput!, create: CarCreateInput!, update: CarUpdateInput!): Car!
+  deleteCar(where: CarWhereUniqueInput!): Car
+  deleteManyCars(where: CarWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -39,6 +265,9 @@ type PageInfo {
 }
 
 type Query {
+  car(where: CarWhereUniqueInput!): Car
+  cars(where: CarWhereInput, orderBy: CarOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Car]!
+  carsConnection(where: CarWhereInput, orderBy: CarOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CarConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -46,6 +275,7 @@ type Query {
 }
 
 type Subscription {
+  car(where: CarSubscriptionWhereInput): CarSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -54,6 +284,10 @@ type User {
   email: String!
   password: String!
   name: String!
+  cars(where: CarWhereInput, orderBy: CarOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Car!]
+  rides(where: CarWhereInput, orderBy: CarOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Car!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 type UserConnection {
@@ -67,6 +301,34 @@ input UserCreateInput {
   email: String!
   password: String!
   name: String!
+  cars: CarCreateManyWithoutDriverInput
+  rides: CarCreateManyWithoutPassengersInput
+}
+
+input UserCreateManyWithoutRidesInput {
+  create: [UserCreateWithoutRidesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutCarsInput {
+  create: UserCreateWithoutCarsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCarsInput {
+  id: ID
+  email: String!
+  password: String!
+  name: String!
+  rides: CarCreateManyWithoutPassengersInput
+}
+
+input UserCreateWithoutRidesInput {
+  id: ID
+  email: String!
+  password: String!
+  name: String!
+  cars: CarCreateManyWithoutDriverInput
 }
 
 type UserEdge {
@@ -83,6 +345,10 @@ enum UserOrderByInput {
   password_DESC
   name_ASC
   name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type UserPreviousValues {
@@ -90,6 +356,86 @@ type UserPreviousValues {
   email: String!
   password: String!
   name: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
 }
 
 type UserSubscriptionPayload {
@@ -114,12 +460,74 @@ input UserUpdateInput {
   email: String
   password: String
   name: String
+  cars: CarUpdateManyWithoutDriverInput
+  rides: CarUpdateManyWithoutPassengersInput
+}
+
+input UserUpdateManyDataInput {
+  email: String
+  password: String
+  name: String
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
   name: String
+}
+
+input UserUpdateManyWithoutRidesInput {
+  create: [UserCreateWithoutRidesInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRidesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRidesInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredWithoutCarsInput {
+  create: UserCreateWithoutCarsInput
+  update: UserUpdateWithoutCarsDataInput
+  upsert: UserUpsertWithoutCarsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutCarsDataInput {
+  email: String
+  password: String
+  name: String
+  rides: CarUpdateManyWithoutPassengersInput
+}
+
+input UserUpdateWithoutRidesDataInput {
+  email: String
+  password: String
+  name: String
+  cars: CarUpdateManyWithoutDriverInput
+}
+
+input UserUpdateWithWhereUniqueWithoutRidesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutRidesDataInput!
+}
+
+input UserUpsertWithoutCarsInput {
+  update: UserUpdateWithoutCarsDataInput!
+  create: UserCreateWithoutCarsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutRidesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutRidesDataInput!
+  create: UserCreateWithoutRidesInput!
 }
 
 input UserWhereInput {
@@ -179,6 +587,28 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  cars_every: CarWhereInput
+  cars_some: CarWhereInput
+  cars_none: CarWhereInput
+  rides_every: CarWhereInput
+  rides_some: CarWhereInput
+  rides_none: CarWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

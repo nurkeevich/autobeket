@@ -3,4 +3,16 @@ type User {
     email: String! @unique
     password: String!
     name: String!
+    cars: [Car!]! @relation(name: "CarToUser", onDelete: CASCADE)
+    rides: [Car!]! @relation(name: "PassengerToRider", onDelete: CASCADE)
+    updatedAt: DateTime! @updatedAt
+    createdAt: DateTime! @createdAt
+}
+
+type Car {
+    id: ID! @id
+    driver: User! @relation(name: "CarToUser", onDelete: SET_NULL)
+    passengers: [User!]! @relation(name: "PassengerToRider", onDelete: SET_NULL)
+    updatedAt: DateTime! @updatedAt
+    createdAt: DateTime! @createdAt
 }
